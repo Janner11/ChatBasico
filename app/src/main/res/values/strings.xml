@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Chat Básico</string>
+
+    <!-- Login/Register -->
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="btn_register">Registrar</string>
+    <string name="btn_go_login">Ya tengo cuenta</string>
+
+    <!-- Main -->
+    <string name="welcome_message">Bienvenido al Chat Básico</string>
+    <string name="btn_logout">Cerrar sesión</string>
+</resources>
