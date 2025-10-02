@@ -8,11 +8,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.chatbasico.adapters.MessageAdapter;
 import com.example.chatbasico.models.Message;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +25,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private CollectionReference messagesRef;
+
     private RecyclerView recyclerMessages;
     private MessageAdapter adapter;
     private List<Message> messageList;
@@ -34,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         // Inicializar Firebase
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        messagesRef = db.collection("messages");
 
         if (mAuth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
@@ -51,15 +61,23 @@ public class MainActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
         btnLogout = findViewById(R.id.btnLogout);
 
-        // Botón enviar (por ahora solo agrega al RecyclerView localmente)
+        // Botón enviar (guardar en Firestore)
         btnSend.setOnClickListener(v -> {
             String text = etMessage.getText().toString().trim();
             if (!text.isEmpty()) {
-                Message msg = new Message(text, mAuth.getCurrentUser().getEmail(), System.currentTimeMillis());
-                messageList.add(msg);
-                adapter.notifyItemInserted(messageList.size() - 1);
-                recyclerMessages.scrollToPosition(messageList.size() - 1);
-                etMessage.setText("");
+                // Guardar el UID del usuario, no el correo
+                String senderId = mAuth.getCurrentUser().getUid();
+
+                Message msg = new Message(
+                        text,
+                        senderId,
+                        System.currentTimeMillis()
+                );
+
+                messagesRef.add(msg)
+                        .addOnSuccessListener(doc -> etMessage.setText(""))
+                        .addOnFailureListener(e ->
+                                Toast.makeText(this, "Error al enviar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
 
@@ -69,5 +87,26 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
+
+        // Escuchar mensajes en tiempo real
+        listenMessages();
+    }
+
+    private void listenMessages() {
+        messagesRef.orderBy("timestamp", Query.Direction.ASCENDING)
+                .addSnapshotListener((snapshots, e) -> {
+                    if (e != null) {
+                        Toast.makeText(this, "Error al cargar mensajes", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                        if (dc.getType() == DocumentChange.Type.ADDED) {
+                            Message msg = dc.getDocument().toObject(Message.class);
+                            messageList.add(msg);
+                            adapter.notifyItemInserted(messageList.size() - 1);
+                            recyclerMessages.scrollToPosition(messageList.size() - 1);
+                        }
+                    }
+                });
     }
 }

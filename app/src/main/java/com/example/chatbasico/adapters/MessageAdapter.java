@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.chatbasico.R;
 import com.example.chatbasico.models.Message;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -18,9 +19,11 @@ import java.util.Locale;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
     private List<Message> messageList;
+    private FirebaseFirestore db;
 
     public MessageAdapter(List<Message> messageList) {
         this.messageList = messageList;
+        this.db = FirebaseFirestore.getInstance(); // inicializar Firestore
     }
 
     @NonNull
@@ -34,7 +37,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         Message message = messageList.get(position);
-        holder.tvSender.setText(message.getSender());
+
+        // Cargar nombre desde Firestore usando senderId
+        db.collection("users").document(message.getSenderId())
+                .get()
+                .addOnSuccessListener(document -> {
+                    if (document.exists()) {
+                        holder.tvSender.setText(document.getString("name")); // mostrar nombre real
+                    } else {
+                        holder.tvSender.setText("Desconocido");
+                    }
+                })
+                .addOnFailureListener(e -> holder.tvSender.setText("Error"));
+
+        // Mostrar mensaje
         holder.tvMessage.setText(message.getText());
 
         // Convertir timestamp a hora legible

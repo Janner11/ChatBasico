@@ -2,15 +2,15 @@ package com.example.chatbasico.models;
 
 public class Message {
     private String text;
-    private String sender;
+    private String senderId; // Guardamos el UID del usuario
     private long timestamp;
 
     // Constructor vacío necesario para Firebase
     public Message() {}
 
-    public Message(String text, String sender, long timestamp) {
+    public Message(String text, String senderId, long timestamp) {
         this.text = text;
-        this.sender = sender;
+        this.senderId = senderId;
         this.timestamp = timestamp;
     }
 
@@ -18,8 +18,8 @@ public class Message {
     public String getText() { return text; }
     public void setText(String text) { this.text = text; }
 
-    public String getSender() { return sender; }
-    public void setSender(String sender) { this.sender = sender; }
+    public String getSenderId() { return senderId; }
+    public void setSenderId(String senderId) { this.senderId = senderId; }
 
     public long getTimestamp() { return timestamp; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }

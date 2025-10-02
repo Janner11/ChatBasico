@@ -10,7 +10,8 @@
             android:id="@+id/recyclerMessages"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:padding="4dp"/>
 
     <!-- Campo para escribir mensaje -->
     <LinearLayout
@@ -25,15 +26,19 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:layout_weight="1"
-                android:hint="Escribe un mensaje"
-                android:inputType="textMultiLine"/>
+                android:hint="@string/hint_message"
+                android:inputType="textCapSentences|textMultiLine"
+                android:scrollbars="vertical"
+                android:textSize="16sp"
+                android:padding="8dp"/>
 
         <Button
                 android:id="@+id/btnSend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
-                android:text="Enviar"/>
+                android:text="@string/btn_send"
+                android:textSize="16sp"/>
     </LinearLayout>
 
     <!-- Botón Logout -->
@@ -42,5 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="48dp"
-            android:text="@string/btn_logout"/>
+            android:text="@string/btn_logout"
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"/>
 </LinearLayout>
