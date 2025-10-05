@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:padding="8dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
 
     <TextView
-            android:id="@+id/tvSender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Usuario"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:layout_marginBottom="2dp"/>
+        android:id="@+id/tvSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="Usuario" />
 
     <TextView
-            android:id="@+id/tvMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mensaje de ejemplo"
-            android:textSize="16sp"
-            android:layout_marginBottom="2dp"/>
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:textSize="16sp"
+        tools:text="Mensaje de ejemplo" />
+
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="250dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        tools:src="@mipmap/ic_launcher" />
 
     <TextView
-            android:id="@+id/tvTimestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10:30 AM"
-            android:textSize="12sp"
-            android:textColor="@android:color/darker_gray"/>
+        android:id="@+id/tvTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        tools:text="10:30 AM" />
+
 </LinearLayout>

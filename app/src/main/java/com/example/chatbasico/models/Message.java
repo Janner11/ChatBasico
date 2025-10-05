@@ -4,6 +4,7 @@ public class Message {
     private String text;
     private String senderId; // Guardamos el UID del usuario
     private long timestamp;
+    private String imageUrl;
 
     // Constructor vacío necesario para Firebase
     public Message() {}
@@ -23,4 +24,7 @@ public class Message {
 
     public long getTimestamp() { return timestamp; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 }

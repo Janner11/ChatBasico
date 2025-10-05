@@ -3,11 +3,13 @@ package com.example.chatbasico.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.chatbasico.R;
 import com.example.chatbasico.models.Message;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,8 +52,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                 })
                 .addOnFailureListener(e -> holder.tvSender.setText("Error"));
 
-        // Mostrar mensaje
-        holder.tvMessage.setText(message.getText());
+        // Si hay una URL de imagen, muéstrala. Si no, muestra el texto.
+        if (message.getImageUrl() != null && !message.getImageUrl().isEmpty()) {
+            holder.tvMessage.setVisibility(View.GONE);
+            holder.ivImage.setVisibility(View.VISIBLE);
+            Glide.with(holder.itemView.getContext())
+                    .load(message.getImageUrl())
+                    .into(holder.ivImage);
+        } else {
+            holder.ivImage.setVisibility(View.GONE);
+            holder.tvMessage.setVisibility(View.VISIBLE);
+            holder.tvMessage.setText(message.getText());
+        }
 
         // Convertir timestamp a hora legible
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -66,12 +78,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView tvSender, tvMessage, tvTimestamp;
+        ImageView ivImage;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             tvSender = itemView.findViewById(R.id.tvSender);
             tvMessage = itemView.findViewById(R.id.tvMessage);
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
+            ivImage = itemView.findViewById(R.id.ivImage);
         }
     }
 }

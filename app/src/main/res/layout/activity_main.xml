@@ -5,6 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+
     <!-- Lista de mensajes -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerMessages"
@@ -19,6 +20,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp">
+
+        <!-- Botón para adjuntar imagen -->
+
+
+        <ImageButton
+            android:id="@+id/btnAttachImage"
+            android:layout_width="77dp"
+            android:layout_height="53dp"
+            android:contentDescription="Adjuntar imagen"
+            android:src="@drawable/ic_attach_file" />
 
         <EditText
                 android:id="@+id/etMessage"
@@ -51,3 +62,6 @@
             android:textSize="16sp"
             android:layout_marginTop="4dp"/>
 </LinearLayout>
+
+
+

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "391201123337",
-    "project_id": "chatbasico-10d65",
-    "storage_bucket": "chatbasico-10d65.firebasestorage.app"
+    "project_number": "1099438412145",
+    "project_id": "proyectoandroid-947a7",
+    "storage_bucket": "proyectoandroid-947a7.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:391201123337:android:903fcc1b16b50528419cd8",
+        "mobilesdk_app_id": "1:1099438412145:android:720e07d501737b808c26d0",
         "android_client_info": {
           "package_name": "com.example.chatbasico"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDsHyNpMKIckcT72UeCnurWcTnyPXgK5Kw"
+          "current_key": "AIzaSyCWpZN3WhMXqTGvdOeEK0oGbLoscdVCx8M"
         }
       ],
       "services": {

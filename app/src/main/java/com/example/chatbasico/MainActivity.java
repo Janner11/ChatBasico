@@ -1,13 +1,18 @@
 package com.example.chatbasico;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.chatbasico.adapters.MessageAdapter;
@@ -18,12 +23,15 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private CollectionReference messagesRef;
@@ -34,12 +42,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText etMessage;
     private Button btnSend, btnLogout;
 
+    private ImageButton btnAttachImage;
+    private ActivityResultLauncher<Intent> galleryLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializar Firebase
+        // Inicializar Firebasez
         FirebaseApp.initializeApp(this);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -60,6 +71,26 @@ public class MainActivity extends AppCompatActivity {
         etMessage = findViewById(R.id.etMessage);
         btnSend = findViewById(R.id.btnSend);
         btnLogout = findViewById(R.id.btnLogout);
+
+        btnAttachImage = findViewById(R.id.btnAttachImage);
+        //Para registrar el callback por el resultado de la galeria
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        //se seleccionó la imagen con éxito
+                        Uri imageUri = result.getData().getData();
+                        if (imageUri != null) {
+                            //llamar la función para subir imagen al firebase
+                            uploadImageToFirebase(imageUri);
+                        }
+                    }
+                }
+        );
+        //configurar el click del botón
+        btnAttachImage.setOnClickListener(v -> {
+            openGallery();
+        });
 
         // Botón enviar (guardar en Firestore)
         btnSend.setOnClickListener(v -> {
@@ -92,6 +123,12 @@ public class MainActivity extends AppCompatActivity {
         listenMessages();
     }
 
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        galleryLauncher.launch(intent);
+    }
+
     private void listenMessages() {
         messagesRef.orderBy("timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener((snapshots, e) -> {
@@ -108,5 +145,41 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void uploadImageToFirebase(Uri imageUri) {
+        String fileName = "img_" + System.currentTimeMillis();
+        StorageReference storageReference = FirebaseStorage.getInstance()
+                .getReference("chat_images/" + fileName);
+
+        storageReference.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        String imageUrl = uri.toString();
+                        sendMessageWithImage(imageUrl);
+                    });
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error al subir la imagen a Firebase Storage", e);
+                    Toast.makeText(this, "Error al subir la imagen: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+    }
+
+    private void sendMessageWithImage(String imageUrl) {
+        String senderId = mAuth.getCurrentUser().getUid();
+        // El texto puede ser un string vacío o un texto predeterminado
+        Message msg = new Message(
+                "Imagen",
+                senderId,
+                System.currentTimeMillis()
+        );
+        msg.setImageUrl(imageUrl); // Necesitamos agregar este campo en el modelo Message
+
+        messagesRef.add(msg)
+                .addOnSuccessListener(doc -> {
+                    // Opcional: limpiar el EditText si es necesario
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error al enviar imagen: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

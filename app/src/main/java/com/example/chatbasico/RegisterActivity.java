@@ -67,30 +67,35 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Crear usuario en FirebaseAuth
+        // 1. Crear usuario en FirebaseAuth
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            // 2. Guardar datos extra en Firestore
+                            Map<String, Object> userProfile = new HashMap<>();
+                            userProfile.put("name", name);
+                            userProfile.put("email", email);
 
-                        // Guardar datos extra en Firestore
-                        Map<String, Object> profile = new HashMap<>();
-                        profile.put("name", name);
-                        profile.put("email", email);
-
-                        db.collection("users").document(user.getUid())
-                                .set(profile)
-                                .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(this, MainActivity.class));
-                                    finish();
-                                })
-                                .addOnFailureListener(e ->
-                                        Toast.makeText(this, "Error guardando perfil: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                                );
-
+                            db.collection("users").document(user.getUid())
+                                    .set(userProfile)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                                        // Redirigir al MainActivity
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // Si falla guardar el perfil, se notifica, pero el usuario ya está creado
+                                        Toast.makeText(RegisterActivity.this, "Error al guardar perfil: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    });
+                        }
                     } else {
-                        Toast.makeText(this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        // Si falla el registro en Auth
+                        Toast.makeText(RegisterActivity.this, "Error en el registro: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
