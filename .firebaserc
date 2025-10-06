@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "proyectoandroid-947a7"
-  }
+    "default": "proyectoandroid-947a7",
+    "chatbasico": "chatbasiconuevo"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -27,16 +27,6 @@ exports.sendChatNotification = onDocumentCreated("messages/{messageId}", async (
         notificationBody = newMessage.text;
     }
 
-    const payload = {
-        notification: {
-            title: `Nuevo mensaje de ${senderName}`,
-            body: notificationBody,
-        },
-        data: {
-            senderId: senderId,
-        },
-    };
-
     const usersSnapshot = await admin.firestore().collection("users").get();
     const tokens = [];
     usersSnapshot.forEach(doc => {
@@ -46,8 +36,32 @@ exports.sendChatNotification = onDocumentCreated("messages/{messageId}", async (
     });
 
     if (tokens.length > 0) {
-        console.log(`Sending notification to ${tokens.length} tokens.`);
-        await admin.messaging().sendToDevice(tokens, payload);
+        console.log(`Sending notification to ${tokens.length} tokens using sendEachForMulticast.`);
+        
+        const message = {
+            notification: {
+                title: `Nuevo mensaje de ${senderName}`,
+                body: notificationBody,
+            },
+            tokens: tokens, // 'tokens' en plural para sendEachForMulticast
+        };
+
+        try {
+            const response = await admin.messaging().sendEachForMulticast(message);
+            console.log("Successfully sent message:", response);
+            if (response.failureCount > 0) {
+                const failedTokens = [];
+                response.responses.forEach((resp, idx) => {
+                    if (!resp.success) {
+                        failedTokens.push(tokens[idx]);
+                    }
+                });
+                console.log("List of tokens that caused failures: " + failedTokens);
+            }
+        } catch (error) {
+            console.log("Error sending message:", error);
+        }
+
     } else {
         console.log("No tokens found to send notification.");
     }

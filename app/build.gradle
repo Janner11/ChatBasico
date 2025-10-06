@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.chatbasico"
-        minSdk 21
+        minSdk 23
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -34,8 +34,8 @@ android {
 }
 
 dependencies {
-    // Firebase BOM compatible con minSdk 21
-    implementation platform('com.google.firebase:firebase-bom:32.7.0')
+    // Firebase BOM actualizado a la versión más reciente
+    implementation platform('com.google.firebase:firebase-bom:33.1.0')
 
     // Productos Firebase
     implementation 'com.google.firebase:firebase-auth'

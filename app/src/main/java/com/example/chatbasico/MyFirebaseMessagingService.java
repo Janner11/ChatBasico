@@ -27,19 +27,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        String senderId = remoteMessage.getData().get("senderId");
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String senderId = remoteMessage.getData().get("senderId");
 
         // No mostrar la notificación si el mensaje es del propio usuario
         if (currentUser != null && senderId != null && senderId.equals(currentUser.getUid())) {
             return;
         }
 
-        String title = remoteMessage.getData().get("title");
-        String body = remoteMessage.getData().get("body");
+        String title = null;
+        String body = null;
+
+        // La notificación se recibe en el objeto Notification, no en Data
+        if (remoteMessage.getNotification() != null) {
+            title = remoteMessage.getNotification().getTitle();
+            body = remoteMessage.getNotification().getBody();
+        }
 
         if (title != null && body != null) {
+            Log.d(TAG, "Notification Received: Title: " + title + " Body: " + body);
             sendNotification(title, body);
+        } else {
+            Log.d(TAG, "Received a message without a notification payload.");
         }
     }
 
@@ -62,7 +71,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // Desde Android Oreo, se necesita un canal de notificación
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId, "Chat Messages", NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
