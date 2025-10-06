@@ -22,6 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.chatbasico.adapters.MessageAdapter;
 import com.example.chatbasico.models.Message;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private CollectionReference messagesRef;
+    private DatabaseReference currentUserStatusRef;
 
     private RecyclerView recyclerMessages;
     private MessageAdapter adapter;
@@ -61,16 +67,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializar Firebase
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        messagesRef = db.collection("messages");
 
         if (mAuth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
         }
+
+        // Inicializar Firebase y sistema de presencia
+        db = FirebaseFirestore.getInstance();
+        messagesRef = db.collection("messages");
+        setupPresenceSystem();
 
         askNotificationPermission();
 
@@ -110,12 +118,46 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnLogout.setOnClickListener(v -> {
+            // Marcar como desconectado antes de cerrar sesión
+            if (currentUserStatusRef != null) {
+                currentUserStatusRef.setValue("offline");
+            }
             mAuth.signOut();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
 
         listenMessages();
+    }
+
+    private void setupPresenceSystem() {
+        currentUserStatusRef = FirebaseDatabase.getInstance().getReference("status/" + mAuth.getCurrentUser().getUid());
+        DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    currentUserStatusRef.setValue("online");
+                    currentUserStatusRef.onDisconnect().setValue("offline");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Listener was cancelled at .info/connected");
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Si la actividad se destruye, intentar marcar como desconectado
+        if (mAuth.getCurrentUser() != null && currentUserStatusRef != null) {
+            currentUserStatusRef.setValue("offline");
+        }
     }
 
     private void askNotificationPermission() {

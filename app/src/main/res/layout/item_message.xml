@@ -6,19 +6,35 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <TextView
-        android:id="@+id/tvSender"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        tools:text="Usuario" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tvSender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Usuario" />
+
+        <ImageView
+            android:id="@+id/ivStatus"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_status_offline"
+            tools:src="@drawable/ic_status_online"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:textSize="16sp"
         tools:text="Mensaje de ejemplo" />
