@@ -1,0 +1,275 @@
+[debug] [2025-10-05T23:54:31.264Z] ----------------------------------------------------------------------
+[debug] [2025-10-05T23:54:31.265Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dario\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2025-10-05T23:54:31.266Z] CLI Version:   14.18.0
+[debug] [2025-10-05T23:54:31.266Z] Platform:      win32
+[debug] [2025-10-05T23:54:31.266Z] Node Version:  v20.11.1
+[debug] [2025-10-05T23:54:31.266Z] Time:          Sun Oct 05 2025 19:54:31 GMT-0400 (Atlantic Standard Time)
+[debug] [2025-10-05T23:54:31.266Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-05T23:54:31.394Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-05T23:54:31.394Z] > authorizing via signed-in user (dariodigiacomo24@gmail.com)
+[debug] [2025-10-05T23:54:31.395Z] [iam] checking project proyectoandroid-947a7 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-10-05T23:54:31.395Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:31.395Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:31.396Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions [none]
+[debug] [2025-10-05T23:54:31.396Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions x-goog-quota-user=projects/proyectoandroid-947a7
+[debug] [2025-10-05T23:54:31.396Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-10-05T23:54:31.634Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions 200
+[debug] [2025-10-05T23:54:31.634Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-10-05T23:54:31.635Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:31.635Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:31.635Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/proyectoandroid-947a7/serviceAccounts/proyectoandroid-947a7@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-10-05T23:54:31.635Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/proyectoandroid-947a7/serviceAccounts/proyectoandroid-947a7@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-10-05T23:54:31.887Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/proyectoandroid-947a7/serviceAccounts/proyectoandroid-947a7@appspot.gserviceaccount.com:testIamPermissions 404
+[debug] [2025-10-05T23:54:31.887Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/proyectoandroid-947a7/serviceAccounts/proyectoandroid-947a7@appspot.gserviceaccount.com:testIamPermissions {"error":{"code":404,"message":"Unknown service account","status":"NOT_FOUND"}}
+[debug] [2025-10-05T23:54:31.887Z] [functions] service account IAM check errored, deploy may fail: Request to https://iam.googleapis.com/v1/projects/proyectoandroid-947a7/serviceAccounts/proyectoandroid-947a7@appspot.gserviceaccount.com:testIamPermissions had HTTP Error: 404, Unknown service account {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":404,"message":"Unknown service account","status":"NOT_FOUND"}},"response":{"statusCode":404}},"exit":1,"message":"Request to https://iam.googleapis.com/v1/projects/proyectoandroid-947a7/serviceAccounts/proyectoandroid-947a7@appspot.gserviceaccount.com:testIamPermissions had HTTP Error: 404, Unknown service account","status":404}
+[info] 
+[info] === Deploying to 'proyectoandroid-947a7'...
+[info] 
+[info] i  deploying functions 
+[debug] [2025-10-05T23:54:31.890Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:31.890Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:31.890Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7 [none]
+[debug] [2025-10-05T23:54:32.015Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7 200
+[debug] [2025-10-05T23:54:32.015Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7 {"projectNumber":"1099438412145","projectId":"proyectoandroid-947a7","lifecycleState":"ACTIVE","name":"ProyectoAndroid","labels":{"firebase":"enabled"},"createTime":"2024-10-09T15:23:15.542689Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-10-05T23:54:32.019Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:32.019Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:32.019Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/proyectoandroid-947a7/adminSdkConfig [none]
+[debug] [2025-10-05T23:54:32.360Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/proyectoandroid-947a7/adminSdkConfig 200
+[debug] [2025-10-05T23:54:32.361Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/proyectoandroid-947a7/adminSdkConfig {"projectId":"proyectoandroid-947a7","storageBucket":"proyectoandroid-947a7.firebasestorage.app"}
+[debug] [2025-10-05T23:54:32.361Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:32.361Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:32.361Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/proyectoandroid-947a7/configs [none]
+[debug] [2025-10-05T23:54:32.550Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/proyectoandroid-947a7/configs 200
+[debug] [2025-10-05T23:54:32.550Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/proyectoandroid-947a7/configs {}
+[debug] [2025-10-05T23:54:32.551Z] Validating nodejs source
+[warn] !  functions: Runtime Node.js 18 was deprecated on 2025-04-30 and will be decommissioned on 2025-10-30, after which you will not be able to deploy without upgrading. Consider upgrading now to avoid disruption. See https://cloud.google.com/functions/docs/runtime-support for full details on the lifecycle policy 
+[warn] !  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] !  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2025-10-05T23:54:33.509Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.0.0"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "private": true
+}
+[debug] [2025-10-05T23:54:33.509Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2025-10-05T23:54:33.509Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-10-05T23:54:33.517Z] Found firebase-functions binary at 'C:\Users\dario\AndroidStudioProjects\ChatBasico\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8992
+
+[debug] [2025-10-05T23:54:33.726Z] Got response from /__/functions.yaml {"endpoints":{"sendChatNotification":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"eventTrigger":{"eventType":"google.cloud.firestore.document.v1.created","eventFilters":{"database":"(default)","namespace":"(default)"},"eventFilterPathPatterns":{"document":"messages/{messageId}"},"retry":false},"entryPoint":"sendChatNotification"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2025-10-05T23:54:38.748Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-05T23:54:38.748Z] > authorizing via signed-in user (dariodigiacomo24@gmail.com)
+[debug] [2025-10-05T23:54:38.748Z] [iam] checking project proyectoandroid-947a7 for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2025-10-05T23:54:38.749Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:38.749Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:38.749Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions [none]
+[debug] [2025-10-05T23:54:38.749Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions x-goog-quota-user=projects/proyectoandroid-947a7
+[debug] [2025-10-05T23:54:38.749Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-10-05T23:54:38.961Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions 200
+[debug] [2025-10-05T23:54:38.961Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2025-10-05T23:54:38.961Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:38.961Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:38.962Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/proyectoandroid-947a7/instances pageSize=100&pageToken=
+[debug] [2025-10-05T23:54:39.263Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/proyectoandroid-947a7/instances 200
+[debug] [2025-10-05T23:54:39.263Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/proyectoandroid-947a7/instances {}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged C:\Users\dario\AndroidStudioProjects\ChatBasico\functions (30.09 KB) for uploading 
+[debug] [2025-10-05T23:54:39.285Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:39.285Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:39.286Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/proyectoandroid-947a7/locations/-/functions [none]
+[debug] [2025-10-05T23:54:39.924Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/proyectoandroid-947a7/locations/-/functions 200
+[debug] [2025-10-05T23:54:39.924Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/proyectoandroid-947a7/locations/-/functions {}
+[debug] [2025-10-05T23:54:39.924Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:39.924Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:39.924Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2025-10-05T23:54:40.439Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/-/functions 200
+[debug] [2025-10-05T23:54:40.439Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/-/functions {}
+[debug] [2025-10-05T23:54:40.440Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:40.440Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:40.441Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/proyectoandroid-947a7/databases/(default) [none]
+[debug] [2025-10-05T23:54:40.781Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/proyectoandroid-947a7/databases/(default) 200
+[debug] [2025-10-05T23:54:40.781Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/proyectoandroid-947a7/databases/(default) {"name":"projects/proyectoandroid-947a7/databases/(default)","uid":"71a03233-2a2f-4ae7-b5f5-ee829a7f1013","createTime":"2025-10-05T22:34:00.389194Z","updateTime":"2025-10-05T22:34:00.389194Z","locationId":"nam5","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2025-10-05T22:54:41.688764Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"s","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"realtimeUpdatesMode":"REALTIME_UPDATES_ENABLED","etag":"IIOi1vegjpADML2wq5WPjpAD"}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2025-10-05T23:54:40.784Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:40.784Z] Checked if tokens are valid: true, expires at: 1759711794615
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2025-10-05T23:54:40.784Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:40.784Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:40.785Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-10-05T23:54:40.785Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/pubsub.googleapis.com:generateServiceIdentity x-goog-quota-user=projects/1099438412145
+[debug] [2025-10-05T23:54:40.785Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/pubsub.googleapis.com:generateServiceIdentity {}
+[debug] [2025-10-05T23:54:40.786Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2025-10-05T23:54:40.786Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/eventarc.googleapis.com:generateServiceIdentity x-goog-quota-user=projects/1099438412145
+[debug] [2025-10-05T23:54:40.786Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/eventarc.googleapis.com:generateServiceIdentity {}
+[debug] [2025-10-05T23:54:41.199Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2025-10-05T23:54:41.199Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-1099438412145@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"109384269530389550347"}}
+[debug] [2025-10-05T23:54:41.217Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2025-10-05T23:54:41.217Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/1099438412145/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-1099438412145@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"102670984923887597143"}}
+[debug] [2025-10-05T23:54:41.218Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:41.218Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:41.218Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/1099438412145 [none]
+[debug] [2025-10-05T23:54:41.402Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/1099438412145 403
+[debug] [2025-10-05T23:54:41.402Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/1099438412145 {"error":{"code":403,"message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145","consumer":"projects/1099438412145","serviceTitle":"Compute Engine API","containerInfo":"1099438412145","service":"compute.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145"}]}]}}
+[debug] [2025-10-05T23:54:41.402Z] unable to look up default compute service account. Falling back to 1099438412145-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145","consumer":"projects/1099438412145","serviceTitle":"Compute Engine API","containerInfo":"1099438412145","service":"compute.googleapis.com"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/1099438412145 had HTTP Error: 403, Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2025-10-05T23:54:41.402Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:41.402Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:41.402Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/1099438412145:getIamPolicy [none]
+[debug] [2025-10-05T23:54:41.629Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/1099438412145:getIamPolicy 200
+[debug] [2025-10-05T23:54:41.629Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/1099438412145:getIamPolicy {"version":1,"etag":"BwZAcgr7AuA=","bindings":[{"role":"roles/cloudaicompanion.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-cloudaicompanion.iam.gserviceaccount.com"]},{"role":"roles/cloudbuild.builds.builder","members":["serviceAccount:1099438412145@cloudbuild.gserviceaccount.com"]},{"role":"roles/cloudbuild.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-cloudbuild.iam.gserviceaccount.com"]},{"role":"roles/cloudfunctions.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/containerregistry.ServiceAgent","members":["serviceAccount:service-1099438412145@containerregistry.iam.gserviceaccount.com"]},{"role":"roles/editor","members":["serviceAccount:1099438412145@cloudservices.gserviceaccount.com","serviceAccount:1099438412145-compute@developer.gserviceaccount.com"]},{"role":"roles/firebase.managementServiceAgent","members":["serviceAccount:firebase-service-account@firebase-sa-management.iam.gserviceaccount.com","serviceAccount:service-1099438412145@gcp-sa-firebase.iam.gserviceaccount.com"]},{"role":"roles/firebase.sdkAdminServiceAgent","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/firebaseauth.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/firebasemods.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firebasemods.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.system","members":["serviceAccount:service-1099438412145@firebase-rules.iam.gserviceaccount.com"]},{"role":"roles/firebasestorage.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firestore.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firestore.iam.gserviceaccount.com"]},{"role":"roles/iam.serviceAccountTokenCreator","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/owner","members":["user:dariodigiacomo24@gmail.com"]},{"role":"roles/run.serviceAgent","members":["serviceAccount:service-1099438412145@serverless-robot-prod.iam.gserviceaccount.com"]},{"role":"roles/storage.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]}]}
+[debug] [2025-10-05T23:54:41.629Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:41.629Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:41.629Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/1099438412145:setIamPolicy [none]
+[debug] [2025-10-05T23:54:41.629Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/1099438412145:setIamPolicy {"policy":{"version":1,"etag":"BwZAcgr7AuA=","bindings":[{"role":"roles/cloudaicompanion.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-cloudaicompanion.iam.gserviceaccount.com"]},{"role":"roles/cloudbuild.builds.builder","members":["serviceAccount:1099438412145@cloudbuild.gserviceaccount.com"]},{"role":"roles/cloudbuild.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-cloudbuild.iam.gserviceaccount.com"]},{"role":"roles/cloudfunctions.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/containerregistry.ServiceAgent","members":["serviceAccount:service-1099438412145@containerregistry.iam.gserviceaccount.com"]},{"role":"roles/editor","members":["serviceAccount:1099438412145@cloudservices.gserviceaccount.com","serviceAccount:1099438412145-compute@developer.gserviceaccount.com"]},{"role":"roles/firebase.managementServiceAgent","members":["serviceAccount:firebase-service-account@firebase-sa-management.iam.gserviceaccount.com","serviceAccount:service-1099438412145@gcp-sa-firebase.iam.gserviceaccount.com"]},{"role":"roles/firebase.sdkAdminServiceAgent","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/firebaseauth.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/firebasemods.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firebasemods.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.system","members":["serviceAccount:service-1099438412145@firebase-rules.iam.gserviceaccount.com"]},{"role":"roles/firebasestorage.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firestore.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firestore.iam.gserviceaccount.com"]},{"role":"roles/iam.serviceAccountTokenCreator","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com","serviceAccount:service-1099438412145@gcp-sa-pubsub.iam.gserviceaccount.com"]},{"role":"roles/owner","members":["user:dariodigiacomo24@gmail.com"]},{"role":"roles/run.serviceAgent","members":["serviceAccount:service-1099438412145@serverless-robot-prod.iam.gserviceaccount.com"]},{"role":"roles/storage.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/run.invoker","members":["serviceAccount:1099438412145-compute@developer.gserviceaccount.com"]},{"role":"roles/eventarc.eventReceiver","members":["serviceAccount:1099438412145-compute@developer.gserviceaccount.com"]}]},"updateMask":"bindings"}
+[debug] [2025-10-05T23:54:42.616Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/1099438412145:setIamPolicy 200
+[debug] [2025-10-05T23:54:42.616Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/1099438412145:setIamPolicy {"version":1,"etag":"BwZAcg8RUl4=","bindings":[{"role":"roles/cloudaicompanion.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-cloudaicompanion.iam.gserviceaccount.com"]},{"role":"roles/cloudbuild.builds.builder","members":["serviceAccount:1099438412145@cloudbuild.gserviceaccount.com"]},{"role":"roles/cloudbuild.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-cloudbuild.iam.gserviceaccount.com"]},{"role":"roles/cloudfunctions.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/containerregistry.ServiceAgent","members":["serviceAccount:service-1099438412145@containerregistry.iam.gserviceaccount.com"]},{"role":"roles/editor","members":["serviceAccount:1099438412145-compute@developer.gserviceaccount.com","serviceAccount:1099438412145@cloudservices.gserviceaccount.com"]},{"role":"roles/eventarc.eventReceiver","members":["serviceAccount:1099438412145-compute@developer.gserviceaccount.com"]},{"role":"roles/firebase.managementServiceAgent","members":["serviceAccount:firebase-service-account@firebase-sa-management.iam.gserviceaccount.com","serviceAccount:service-1099438412145@gcp-sa-firebase.iam.gserviceaccount.com"]},{"role":"roles/firebase.sdkAdminServiceAgent","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/firebaseauth.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]},{"role":"roles/firebasemods.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firebasemods.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.system","members":["serviceAccount:service-1099438412145@firebase-rules.iam.gserviceaccount.com"]},{"role":"roles/firebasestorage.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firestore.serviceAgent","members":["serviceAccount:service-1099438412145@gcp-sa-firestore.iam.gserviceaccount.com"]},{"role":"roles/iam.serviceAccountTokenCreator","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com","serviceAccount:service-1099438412145@gcp-sa-pubsub.iam.gserviceaccount.com"]},{"role":"roles/owner","members":["user:dariodigiacomo24@gmail.com"]},{"role":"roles/run.invoker","members":["serviceAccount:1099438412145-compute@developer.gserviceaccount.com"]},{"role":"roles/run.serviceAgent","members":["serviceAccount:service-1099438412145@serverless-robot-prod.iam.gserviceaccount.com"]},{"role":"roles/storage.admin","members":["serviceAccount:firebase-adminsdk-72xvq@proyectoandroid-947a7.iam.gserviceaccount.com"]}]}
+[debug] [2025-10-05T23:54:42.617Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:42.617Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:42.617Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7 [none]
+[debug] [2025-10-05T23:54:42.737Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7 200
+[debug] [2025-10-05T23:54:42.738Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/proyectoandroid-947a7 {"projectNumber":"1099438412145","projectId":"proyectoandroid-947a7","lifecycleState":"ACTIVE","name":"ProyectoAndroid","labels":{"firebase":"enabled"},"createTime":"2024-10-09T15:23:15.542689Z"}
+[debug] [2025-10-05T23:54:42.738Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:42.738Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:42.738Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/1099438412145 [none]
+[debug] [2025-10-05T23:54:42.824Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/1099438412145 403
+[debug] [2025-10-05T23:54:42.824Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/1099438412145 {"error":{"code":403,"message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145","service":"compute.googleapis.com","containerInfo":"1099438412145","serviceTitle":"Compute Engine API","consumer":"projects/1099438412145"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145"}]}]}}
+[debug] [2025-10-05T23:54:42.825Z] unable to look up default compute service account. Falling back to 1099438412145-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145","service":"compute.googleapis.com","containerInfo":"1099438412145","serviceTitle":"Compute Engine API","consumer":"projects/1099438412145"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/1099438412145 had HTTP Error: 403, Compute Engine API has not been used in project 1099438412145 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1099438412145 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2025-10-05T23:54:42.826Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:42.826Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:42.826Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/proyectoandroid-947a7/billingInfo [none]
+[debug] [2025-10-05T23:54:43.157Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/proyectoandroid-947a7/billingInfo 200
+[debug] [2025-10-05T23:54:43.158Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/proyectoandroid-947a7/billingInfo {"name":"projects/proyectoandroid-947a7/billingInfo","projectId":"proyectoandroid-947a7","billingAccountName":"billingAccounts/010BCF-C37547-1C8F60","billingEnabled":true}
+[debug] [2025-10-05T23:54:43.159Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:43.159Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:43.159Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions:generateUploadUrl [none]
+[debug] [2025-10-05T23:54:45.452Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions:generateUploadUrl 200
+[debug] [2025-10-05T23:54:45.453Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/gcf-v2-uploads-1099438412145.us-central1.cloudfunctions.appspot.com/9607926f-7960-4d9d-abca-5aa286acdbec.zip?GoogleAccessId=service-1099438412145@gcf-admin-robot.iam.gserviceaccount.com&Expires=1759710286&Signature=TSxEVQaAHR4Ibg0qakBvIsO7PpsujVW5qflbs6qC4dEAmE6O3gG1MjxC6nrJqQVxCZpkcBNJx0KTcQkhkO%2BnSeQOVeiqlZ%2FkkxuuSrjjNAhBmU6TP85GWC3tQU4jP5VXdng%2Fs2gC65IHMPVb5duSE6KF1ehhFtiAgRb%2Fksdual7e5H1%2Fu6qAbEICiP%2Fo5eoifIZUIFWJSJ2T1YSU0M%2B9n7pDfkLDRUCUqZb2N%2B5XCrR39QfNkNiU5lCXHLQCUzIsUxl6WDnOS5Yp%2F2%2Fh%2BG13TUQrvYr3innUu6ZcMEY71NgLnLiMybHUPzBL3q5gEVoGa8p2Vd3HyNG2KEshH%2BftRw%3D%3D","storageSource":{"bucket":"gcf-v2-uploads-1099438412145.us-central1.cloudfunctions.appspot.com","object":"9607926f-7960-4d9d-abca-5aa286acdbec.zip"}}
+[debug] [2025-10-05T23:54:45.453Z] >>> [apiv2][query] PUT https://storage.googleapis.com/gcf-v2-uploads-1099438412145.us-central1.cloudfunctions.appspot.com/9607926f-7960-4d9d-abca-5aa286acdbec.zip GoogleAccessId=service-1099438412145%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1759710286&Signature=TSxEVQaAHR4Ibg0qakBvIsO7PpsujVW5qflbs6qC4dEAmE6O3gG1MjxC6nrJqQVxCZpkcBNJx0KTcQkhkO%2BnSeQOVeiqlZ%2FkkxuuSrjjNAhBmU6TP85GWC3tQU4jP5VXdng%2Fs2gC65IHMPVb5duSE6KF1ehhFtiAgRb%2Fksdual7e5H1%2Fu6qAbEICiP%2Fo5eoifIZUIFWJSJ2T1YSU0M%2B9n7pDfkLDRUCUqZb2N%2B5XCrR39QfNkNiU5lCXHLQCUzIsUxl6WDnOS5Yp%2F2%2Fh%2BG13TUQrvYr3innUu6ZcMEY71NgLnLiMybHUPzBL3q5gEVoGa8p2Vd3HyNG2KEshH%2BftRw%3D%3D
+[debug] [2025-10-05T23:54:45.453Z] >>> [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-1099438412145.us-central1.cloudfunctions.appspot.com/9607926f-7960-4d9d-abca-5aa286acdbec.zip [stream]
+[debug] [2025-10-05T23:54:45.907Z] <<< [apiv2][status] PUT https://storage.googleapis.com/gcf-v2-uploads-1099438412145.us-central1.cloudfunctions.appspot.com/9607926f-7960-4d9d-abca-5aa286acdbec.zip 200
+[debug] [2025-10-05T23:54:45.908Z] <<< [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-1099438412145.us-central1.cloudfunctions.appspot.com/9607926f-7960-4d9d-abca-5aa286acdbec.zip [omitted]
+[info] +  functions: functions source uploaded successfully 
+[info] i  functions: creating Node.js 18 (2nd Gen) function sendChatNotification(us-central1)... 
+[debug] [2025-10-05T23:54:45.910Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:45.910Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:54:45.910Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions functionId=sendChatNotification
+[debug] [2025-10-05T23:54:45.911Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions {"name":"projects/proyectoandroid-947a7/locations/us-central1/functions/sendChatNotification","buildConfig":{"runtime":"nodejs18","entryPoint":"sendChatNotification","source":{"storageSource":{"bucket":"gcf-v2-uploads-1099438412145.us-central1.cloudfunctions.appspot.com","object":"9607926f-7960-4d9d-abca-5aa286acdbec.zip"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}},"serviceConfig":{"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"proyectoandroid-947a7\",\"storageBucket\":\"proyectoandroid-947a7.firebasestorage.app\"}","GCLOUD_PROJECT":"proyectoandroid-947a7","EVENTARC_CLOUD_EVENT_SOURCE":"projects/proyectoandroid-947a7/locations/us-central1/services/sendChatNotification","FUNCTION_SIGNATURE_TYPE":"cloudevent","FUNCTION_TARGET":"sendChatNotification","LOG_EXECUTION_ID":"true"},"ingressSettings":null,"timeoutSeconds":null,"serviceAccountEmail":null,"availableMemory":"256Mi","minInstanceCount":null,"maxInstanceCount":null,"maxInstanceRequestConcurrency":80,"availableCpu":"1","vpcConnector":null,"vpcConnectorEgressSettings":null},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"cf489534a582f1363bc1dc6b1fa804fed717bcd3"},"eventTrigger":{"eventType":"google.cloud.firestore.document.v1.created","retryPolicy":"RETRY_POLICY_DO_NOT_RETRY","eventFilters":[{"attribute":"database","value":"(default)"},{"attribute":"namespace","value":"(default)"},{"attribute":"document","value":"messages/{messageId}","operator":"match-path-pattern"}],"triggerRegion":"nam5"}}
+[debug] [2025-10-05T23:55:02.512Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions 400
+[debug] [2025-10-05T23:55:02.512Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions {"error":{"code":400,"message":"Validation failed for trigger projects/proyectoandroid-947a7/locations/nam5/triggers/sendchatnotification-886393: Invalid resource state for \"\": Permission denied while using the Eventarc Service Agent. If you recently started to use Eventarc, it may take a few minutes before all necessary permissions are propagated to the Service Agent. Otherwise, verify that it has Eventarc Service Agent role.","status":"FAILED_PRECONDITION"}}
+[warn] !  functions: Request to https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions?functionId=sendChatNotification had HTTP Error: 400, Validation failed for trigger projects/proyectoandroid-947a7/locations/nam5/triggers/sendchatnotification-886393: Invalid resource state for "": Permission denied while using the Eventarc Service Agent. If you recently started to use Eventarc, it may take a few minutes before all necessary permissions are propagated to the Service Agent. Otherwise, verify that it has Eventarc Service Agent role. 
+[warn] !  functions: Since this is your first time using 2nd gen functions, we need a little bit longer to finish setting everything up. Retry the deployment in a few minutes. 
+[warn] !  functions:  failed to create function projects/proyectoandroid-947a7/locations/us-central1/functions/sendChatNotification 
+[error] Failed to create function projects/proyectoandroid-947a7/locations/us-central1/functions/sendChatNotification
+[debug] [2025-10-05T23:55:02.517Z] Total Function Deployment time: 16605
+[debug] [2025-10-05T23:55:02.517Z] 1 Functions Deployed
+[debug] [2025-10-05T23:55:02.517Z] 1 Functions Errored
+[debug] [2025-10-05T23:55:02.517Z] 0 Function Deployments Aborted
+[debug] [2025-10-05T23:55:02.517Z] Average Function Deployment time: 16604
+[info] 
+[info] Functions deploy had errors with the following functions:
+	sendChatNotification(us-central1)
+[debug] [2025-10-05T23:55:02.668Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:55:02.668Z] Checked if tokens are valid: true, expires at: 1759711794615
+[debug] [2025-10-05T23:55:02.668Z] >>> [apiv2][query] GET https://artifactregistry.googleapis.com/v1/projects/proyectoandroid-947a7/locations/us-central1/repositories/gcf-artifacts [none]
+[debug] [2025-10-05T23:55:03.001Z] <<< [apiv2][status] GET https://artifactregistry.googleapis.com/v1/projects/proyectoandroid-947a7/locations/us-central1/repositories/gcf-artifacts 404
+[debug] [2025-10-05T23:55:03.001Z] <<< [apiv2][body] GET https://artifactregistry.googleapis.com/v1/projects/proyectoandroid-947a7/locations/us-central1/repositories/gcf-artifacts {"error":{"code":404,"message":"Requested entity was not found.","status":"NOT_FOUND"}}
+[debug] [2025-10-05T23:55:03.001Z] Failed to check artifact cleanup policy for region us-central1: Request to https://artifactregistry.googleapis.com/v1/projects/proyectoandroid-947a7/locations/us-central1/repositories/gcf-artifacts had HTTP Error: 404, Requested entity was not found. {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":404,"message":"Requested entity was not found.","status":"NOT_FOUND"}},"response":{"statusCode":404}},"exit":1,"message":"Request to https://artifactregistry.googleapis.com/v1/projects/proyectoandroid-947a7/locations/us-central1/repositories/gcf-artifacts had HTTP Error: 404, Requested entity was not found.","status":404}
+[debug] [2025-10-05T23:55:03.003Z] Functions deploy failed.
+[debug] [2025-10-05T23:55:03.003Z] {
+  "endpoint": {
+    "id": "sendChatNotification",
+    "project": "proyectoandroid-947a7",
+    "region": "us-central1",
+    "entryPoint": "sendChatNotification",
+    "platform": "gcfv2",
+    "runtime": "nodejs18",
+    "eventTrigger": {
+      "eventType": "google.cloud.firestore.document.v1.created",
+      "retry": false,
+      "eventFilters": {
+        "database": "(default)",
+        "namespace": "(default)"
+      },
+      "eventFilterPathPatterns": {
+        "document": "messages/{messageId}"
+      },
+      "region": "nam5"
+    },
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "serviceAccount": null,
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "concurrency": 80,
+    "vpc": null,
+    "environmentVariables": {
+      "FIREBASE_CONFIG": "{\"projectId\":\"proyectoandroid-947a7\",\"storageBucket\":\"proyectoandroid-947a7.firebasestorage.app\"}",
+      "GCLOUD_PROJECT": "proyectoandroid-947a7",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/proyectoandroid-947a7/locations/us-central1/services/sendChatNotification"
+    },
+    "codebase": "default",
+    "cpu": 1,
+    "targetedByOnly": false,
+    "hash": "cf489534a582f1363bc1dc6b1fa804fed717bcd3"
+  },
+  "op": "create",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "context": {
+      "function": "projects/proyectoandroid-947a7/locations/us-central1/functions/sendChatNotification"
+    },
+    "exit": 1,
+    "message": "Failed to create function projects/proyectoandroid-947a7/locations/us-central1/functions/sendChatNotification",
+    "original": {
+      "name": "FirebaseError",
+      "children": [],
+      "context": {
+        "body": {
+          "error": {
+            "code": 400,
+            "message": "Validation failed for trigger projects/proyectoandroid-947a7/locations/nam5/triggers/sendchatnotification-886393: Invalid resource state for \"\": Permission denied while using the Eventarc Service Agent. If you recently started to use Eventarc, it may take a few minutes before all necessary permissions are propagated to the Service Agent. Otherwise, verify that it has Eventarc Service Agent role.",
+            "status": "FAILED_PRECONDITION"
+          }
+        },
+        "response": {
+          "statusCode": 400
+        }
+      },
+      "exit": 1,
+      "message": "Request to https://cloudfunctions.googleapis.com/v2/projects/proyectoandroid-947a7/locations/us-central1/functions?functionId=sendChatNotification had HTTP Error: 400, Validation failed for trigger projects/proyectoandroid-947a7/locations/nam5/triggers/sendchatnotification-886393: Invalid resource state for \"\": Permission denied while using the Eventarc Service Agent. If you recently started to use Eventarc, it may take a few minutes before all necessary permissions are propagated to the Service Agent. Otherwise, verify that it has Eventarc Service Agent role.",
+      "status": 400
+    },
+    "status": 400,
+    "code": 400
+  }
+}
+[debug] [2025-10-05T23:55:03.038Z] Error: Failed to create function sendChatNotification in region us-central1
+    at C:\Users\dario\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:306:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Fabricator.createV2Function (C:\Users\dario\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:290:30)
+    at async Fabricator.createEndpoint (C:\Users\dario\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:137:13)
+    at async handle (C:\Users\dario\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:89:17)
+[error] 
+[error] Error: There was an error deploying functions

@@ -1,13 +1,10 @@
 package com.example.chatbasico;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -15,9 +12,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.chatbasico.adapters.MessageAdapter;
 import com.example.chatbasico.models.Message;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
@@ -44,14 +47,21 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton btnAttachImage;
     private ActivityResultLauncher<Intent> galleryLauncher;
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(), isGranted -> {
+        if (isGranted) {
+            // El permiso fue concedido
+        } else {
+            Toast.makeText(this, "El permiso de notificación es necesario para recibir alertas de mensajes.", Toast.LENGTH_LONG).show();
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializar Firebasez
-        FirebaseApp.initializeApp(this);
+        // Inicializar Firebase
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         messagesRef = db.collection("messages");
@@ -59,7 +69,10 @@ public class MainActivity extends AppCompatActivity {
         if (mAuth.getCurrentUser() == null) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+            return;
         }
+
+        askNotificationPermission();
 
         // Configurar RecyclerView
         recyclerMessages = findViewById(R.id.recyclerMessages);
@@ -73,54 +86,44 @@ public class MainActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btnLogout);
 
         btnAttachImage = findViewById(R.id.btnAttachImage);
-        //Para registrar el callback por el resultado de la galeria
         galleryLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        //se seleccionó la imagen con éxito
                         Uri imageUri = result.getData().getData();
                         if (imageUri != null) {
-                            //llamar la función para subir imagen al firebase
                             uploadImageToFirebase(imageUri);
                         }
                     }
                 }
         );
-        //configurar el click del botón
-        btnAttachImage.setOnClickListener(v -> {
-            openGallery();
-        });
 
-        // Botón enviar (guardar en Firestore)
+        btnAttachImage.setOnClickListener(v -> openGallery());
+
         btnSend.setOnClickListener(v -> {
             String text = etMessage.getText().toString().trim();
             if (!text.isEmpty()) {
-                // Guardar el UID del usuario, no el correo
                 String senderId = mAuth.getCurrentUser().getUid();
-
-                Message msg = new Message(
-                        text,
-                        senderId,
-                        System.currentTimeMillis()
-                );
-
-                messagesRef.add(msg)
-                        .addOnSuccessListener(doc -> etMessage.setText(""))
-                        .addOnFailureListener(e ->
-                                Toast.makeText(this, "Error al enviar: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                Message msg = new Message(text, senderId, System.currentTimeMillis());
+                messagesRef.add(msg).addOnSuccessListener(doc -> etMessage.setText(""));
             }
         });
 
-        // Botón logout
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
 
-        // Escuchar mensajes en tiempo real
         listenMessages();
+    }
+
+    private void askNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
     }
 
     private void openGallery() {
@@ -133,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         messagesRef.orderBy("timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener((snapshots, e) -> {
                     if (e != null) {
-                        Toast.makeText(this, "Error al cargar mensajes", Toast.LENGTH_SHORT).show();
+                        Log.w(TAG, "Listen failed.", e);
                         return;
                     }
                     for (DocumentChange dc : snapshots.getDocumentChanges()) {
@@ -149,37 +152,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void uploadImageToFirebase(Uri imageUri) {
         String fileName = "img_" + System.currentTimeMillis();
-        StorageReference storageReference = FirebaseStorage.getInstance()
-                .getReference("chat_images/" + fileName);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("chat_images/" + fileName);
 
         storageReference.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                        String imageUrl = uri.toString();
-                        sendMessageWithImage(imageUrl);
-                    });
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error al subir la imagen a Firebase Storage", e);
-                    Toast.makeText(this, "Error al subir la imagen: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+                .addOnSuccessListener(taskSnapshot -> storageReference.getDownloadUrl().addOnSuccessListener(this::sendMessageWithImage))
+                .addOnFailureListener(e -> Toast.makeText(this, "Error al subir la imagen", Toast.LENGTH_SHORT).show());
     }
 
-    private void sendMessageWithImage(String imageUrl) {
+    private void sendMessageWithImage(Uri imageUri) {
+        String imageUrl = imageUri.toString();
         String senderId = mAuth.getCurrentUser().getUid();
-        // El texto puede ser un string vacío o un texto predeterminado
-        Message msg = new Message(
-                "Imagen",
-                senderId,
-                System.currentTimeMillis()
-        );
-        msg.setImageUrl(imageUrl); // Necesitamos agregar este campo en el modelo Message
-
-        messagesRef.add(msg)
-                .addOnSuccessListener(doc -> {
-                    // Opcional: limpiar el EditText si es necesario
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Error al enviar imagen: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        Message msg = new Message("Imagen", senderId, System.currentTimeMillis());
+        msg.setImageUrl(imageUrl);
+        messagesRef.add(msg);
     }
 }
