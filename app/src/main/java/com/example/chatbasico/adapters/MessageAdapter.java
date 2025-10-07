@@ -7,17 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.chatbasico.R;
 import com.example.chatbasico.models.Message;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -28,20 +23,36 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     private List<Message> messageList;
     private FirebaseFirestore db;
-    private DatabaseReference statusRef; // Referencia para el estado de conexión
+    private FirebaseAuth mAuth;
+
+    private static final int VIEW_TYPE_SENT = 1;
+    private static final int VIEW_TYPE_RECEIVED = 2;
 
     public MessageAdapter(List<Message> messageList) {
         this.messageList = messageList;
         this.db = FirebaseFirestore.getInstance();
-        // Apunta a la raíz de los estados de conexión en Realtime Database
-        this.statusRef = FirebaseDatabase.getInstance().getReference("status");
+        this.mAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Message message = messageList.get(position);
+        if (message.getSenderId().equals(mAuth.getCurrentUser().getUid())) {
+            return VIEW_TYPE_SENT;
+        } else {
+            return VIEW_TYPE_RECEIVED;
+        }
     }
 
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_message, parent, false);
+        View view;
+        if (viewType == VIEW_TYPE_SENT) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_sent, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message_received, parent, false);
+        }
         return new MessageViewHolder(view);
     }
 
@@ -49,41 +60,21 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         Message message = messageList.get(position);
 
-        // Cargar nombre desde Firestore
-        db.collection("users").document(message.getSenderId())
-                .get()
-                .addOnSuccessListener(document -> {
-                    if (document.exists()) {
-                        holder.tvSender.setText(document.getString("name"));
-                    } else {
-                        holder.tvSender.setText("Desconocido");
-                    }
-                })
-                .addOnFailureListener(e -> holder.tvSender.setText("Error"));
-
-        // Observar el estado de conexión del remitente desde Realtime Database
-        statusRef.child(message.getSenderId()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists() && "online".equals(snapshot.getValue(String.class))) {
-                    holder.ivStatus.setImageDrawable(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_status_online));
-                } else {
-                    holder.ivStatus.setImageDrawable(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_status_offline));
+        // Si es un mensaje recibido, obtenemos y mostramos el nombre del remitente
+        if (getItemViewType(position) == VIEW_TYPE_RECEIVED) {
+            db.collection("users").document(message.getSenderId()).get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    holder.tvSender.setText(documentSnapshot.getString("name"));
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // En caso de error, mostrar como desconectado
-                holder.ivStatus.setImageDrawable(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.ic_status_offline));
-            }
-        });
-
+            });
+        }
 
         // Lógica para mostrar imagen o texto
-        if (message.getImageUrl() != null && !message.getImageUrl().isEmpty()) {
-            holder.tvMessage.setVisibility(View.GONE);
+        boolean isImage = message.getImageUrl() != null && !message.getImageUrl().isEmpty();
+
+        if (isImage) {
             holder.ivImage.setVisibility(View.VISIBLE);
+            holder.tvMessage.setVisibility(View.GONE);
             Glide.with(holder.itemView.getContext())
                     .load(message.getImageUrl())
                     .into(holder.ivImage);
@@ -106,7 +97,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView tvSender, tvMessage, tvTimestamp;
-        ImageView ivImage, ivStatus; // Añadido ivStatus
+        ImageView ivImage;
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,7 +105,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             tvMessage = itemView.findViewById(R.id.tvMessage);
             tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
             ivImage = itemView.findViewById(R.id.ivImage);
-            ivStatus = itemView.findViewById(R.id.ivStatus); // Inicializar ivStatus
         }
     }
 }

@@ -59,7 +59,9 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         updateFcmToken(); // Actualizar el token de FCM
                         Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(this, MainActivity.class));
+                        Intent intent = new Intent(this, ChatListActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                         finish();
                     } else {
                         Toast.makeText(this, "Error en el inicio de sesión: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();

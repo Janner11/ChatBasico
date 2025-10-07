@@ -82,8 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     .set(userProfile)
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
-                                        // Redirigir al MainActivity
-                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        // Redirigir al ChatListActivity
+                                        Intent intent = new Intent(RegisterActivity.this, ChatListActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
                                         finish();

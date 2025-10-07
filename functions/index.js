@@ -3,47 +3,69 @@ const admin = require("firebase-admin");
 
 admin.initializeApp();
 
-exports.sendChatNotification = onDocumentCreated("messages/{messageId}", async (event) => {
+exports.sendChatNotification = onDocumentCreated("chats/{chatId}/messages/{messageId}", async (event) => {
     const snap = event.data;
     if (!snap) {
         console.log("No data associated with the event");
         return;
     }
 
+    const chatId = event.params.chatId;
     const newMessage = snap.data();
     const senderId = newMessage.senderId;
 
-    const userDoc = await admin.firestore().collection("users").doc(senderId).get();
-    if (!userDoc.exists) {
+    // Obtener el nombre del remitente
+    const senderDoc = await admin.firestore().collection("users").doc(senderId).get();
+    if (!senderDoc.exists) {
         console.log(`Sender with ID ${senderId} not found.`);
         return;
     }
-    const senderName = userDoc.data().name || "Alguien";
+    const senderName = senderDoc.data().name || "Alguien";
 
-    let notificationBody;
-    if (newMessage.imageUrl) {
-        notificationBody = `Te ha enviado una imagen.`;
-    } else {
-        notificationBody = newMessage.text;
+    // Obtener la información del chat
+    const chatDoc = await admin.firestore().collection("chats").doc(chatId).get();
+    if (!chatDoc.exists) {
+        console.log(`Chat with ID ${chatId} not found.`);
+        return;
+    }
+    const chatData = chatDoc.data();
+    const chatName = chatData.name; // Puede ser el nombre del grupo o nulo
+    const userIds = chatData.userIds;
+
+    // Determinar el título de la notificación
+    let notificationTitle = senderName;
+    // CORRECCIÓN: Usar la comprobación correcta de JavaScript para un string
+    if (chatName && chatName.length > 0) { 
+        notificationTitle = `${chatName}: ${senderName}`;
     }
 
-    const usersSnapshot = await admin.firestore().collection("users").get();
+    // Determinar el cuerpo de la notificación
+    let notificationBody = newMessage.imageUrl ? `Te ha enviado una imagen.` : newMessage.text;
+
+    // Recopilar los tokens de los destinatarios
     const tokens = [];
-    usersSnapshot.forEach(doc => {
-        if (doc.id !== senderId && doc.data().fcmToken) {
-            tokens.push(doc.data().fcmToken);
+    for (const userId of userIds) {
+        if (userId !== senderId) {
+            const userDoc = await admin.firestore().collection("users").doc(userId).get();
+            if (userDoc.exists && userDoc.data().fcmToken) {
+                tokens.push(userDoc.data().fcmToken);
+            }
         }
-    });
+    }
 
     if (tokens.length > 0) {
-        console.log(`Sending notification to ${tokens.length} tokens using sendEachForMulticast.`);
-        
+        console.log(`Sending notification to ${tokens.length} tokens.`);
+
         const message = {
             notification: {
-                title: `Nuevo mensaje de ${senderName}`,
+                title: notificationTitle,
                 body: notificationBody,
             },
-            tokens: tokens, // 'tokens' en plural para sendEachForMulticast
+            data: {
+                chatId: chatId, // Enviar el ID del chat para poder abrirlo desde la notificación
+                senderId: senderId,
+            },
+            tokens: tokens,
         };
 
         try {
@@ -61,7 +83,6 @@ exports.sendChatNotification = onDocumentCreated("messages/{messageId}", async (
         } catch (error) {
             console.log("Error sending message:", error);
         }
-
     } else {
         console.log("No tokens found to send notification.");
     }
